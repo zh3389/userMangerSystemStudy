@@ -1,31 +1,29 @@
 <template>
     <div>
-        <h2>登录</h2>
-        <form @submit.prevent="login">
-            <div>
-                <label for="email">Email:</label>
-                <input type="email" v-model="email" required>
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" v-model="password" required>
-            </div>
-            <button type="submit">登录</button>
-        </form>
-        <div>JWT验证方式在过期前一直有效，不能在服务器端失效</div>
-        <button @click="logout">退出登录</button>
+        <!-- <h2>登录</h2> -->
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" v-model="email" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" v-model="password" required>
+        </div>
+        <button @click="login">登录</button>&nbsp&nbsp<button @click="sendResetLink">忘记密码</button>
+        <p v-if="message">{{ message }}</p>
     </div>
-
 </template>
 
 <script>
 import axios from 'axios';
+import router from '../router';
 
 export default {
     data() {
         return {
             email: '123@qq.com',
-            password: '123123'
+            password: '123123',
+            message: ''
         };
     },
     methods: {
@@ -46,26 +44,19 @@ export default {
                 console.log("this.access_token:", this.access_token);
                 console.log("this.email:", this.email);
                 alert('登录成功');
+                router.push('/Home')
             } catch (error) {
                 alert('登录失败');
             }
         },
-        async logout() {
+        async sendResetLink() {
             try {
-                const response = await axios.post('http://localhost:8000/auth/jwt/logout', {'token': this.access_token}, {
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('token') || this.access_token}`,
-                            'accept': 'application/json',
-                        }
-                });
-
-                // 假设你在本地存储了用户的 JWT token，需要在退出时清除
-                localStorage.removeItem('token');
-
-                // 重定向到登录页面或首页
-                // router.push('/login');
+                const response = await axios.post('http://localhost:8000/auth/forgot-password', { email: this.email });
+                this.message = '重置密码链接已发送到您的邮箱。';
+                console.log("response:", response.status);
+                router.push('/ResetPassword')
             } catch (error) {
-                console.error('退出登录时出错，请重试。', error);
+                this.message = '发送重置密码链接时出错。请重试。';
             }
         }
     }
