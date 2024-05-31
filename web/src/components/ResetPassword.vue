@@ -35,7 +35,7 @@ export default {
             }
             try {
                 const token = this.$route.query.token; // 假设重置链接中包含token
-                const response = await axios.post('http://localhost:8000/auth/jwt/change-password', {
+                const response = await axios.post('/auth/jwt/change-password', {
                     password: this.newPassword,
                     token: token
                 });

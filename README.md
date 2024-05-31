@@ -43,3 +43,20 @@ npm run dev
 
 #### 版本二
 ![可视化](./assets/router.png)
+
+#### 版本三
+增加服务器CROS配置，并修改项目代码为部署形式。
+
+```bash
+# 第一步：在版本二的基础上修改本地服务地址为线上服务器地址
+# 增加后端CROS配置，允许前端部署服务器地址 + 端口
+# 修改前端CROS配置，允许后端部署服务器地址 + 端口
+# 第二步：运行后端服务
+cd 项目根目录
+python main.py
+# 第三步：打包前端
+cd 项目根目录/web
+npm run build
+# 第四步：运行前端服务
+docker run --name nginx-test -v "$PWD/web/dist:/usr/share/nginx/html" -p 10000:80 -d nginx
+```

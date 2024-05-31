@@ -27,7 +27,7 @@ export default {
     methods: {
         async getUserInfo() {
                 try {
-                    const response = await axios.get('http://localhost:8000/users/me', {
+                    const response = await axios.get('/users/me', {
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('token') || this.access_token}`,
                             'accept': 'application/json',
@@ -42,7 +42,7 @@ export default {
             },
         async logout() {
                 try {
-                    const response = await axios.post('http://localhost:8000/auth/jwt/logout', {'token': this.access_token}, {
+                    const response = await axios.post('/auth/jwt/logout', {'token': this.access_token}, {
                             headers: {
                                 'Authorization': `Bearer ${localStorage.getItem('token') || this.access_token}`,
                                 'accept': 'application/json',
@@ -60,7 +60,7 @@ export default {
             },
         async testAuth() {
             try {
-                const res = await axios.get('http://localhost:8000/authenticated-route', {
+                const res = await axios.get('/authenticated-route', {
                     headers: {
                             'Authorization': `Bearer ${localStorage.getItem('token') || this.access_token}`,
                             'accept': 'application/json',

@@ -29,7 +29,7 @@ export default {
     methods: {
         async login() {
             try {
-                const response = await axios.post('http://localhost:8000/auth/jwt/login', {
+                const response = await axios.post('/auth/jwt/login', {
                     username: this.email,
                     password: this.password
                 }, {
@@ -51,7 +51,7 @@ export default {
         },
         async sendResetLink() {
             try {
-                const response = await axios.post('http://localhost:8000/auth/forgot-password', { email: this.email });
+                const response = await axios.post('/auth/forgot-password', { email: this.email });
                 this.message = '重置密码链接已发送到您的邮箱。';
                 console.log("response:", response.status);
                 router.push('/ResetPassword')

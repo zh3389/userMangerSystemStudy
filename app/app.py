@@ -25,6 +25,7 @@ app = FastAPI(lifespan=lifespan)
 # 配置 CORS
 origins = [
     "http://localhost:5173",
+    "http://154.8.156.156:10000",
 ]
 app.add_middleware(
     CORSMiddleware,

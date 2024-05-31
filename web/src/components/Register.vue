@@ -28,7 +28,7 @@ export default {
     methods: {
         async register() {
             try {
-                await axios.post('http://localhost:8000/auth/register', {
+                await axios.post('/auth/register', {
                     email: this.email,
                     password: this.password
                 });
@@ -39,7 +39,7 @@ export default {
         },
         async sendVerificationEmail() {
             try {
-                const response = await axios.post('http://localhost:8000/auth/request-verify-token', {
+                const response = await axios.post('/auth/request-verify-token', {
                     email: this.email
                 });
                 console.log(this.email)
